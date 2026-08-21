@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width= device-width, initial-scale= 1.0">
+        <title>Tugas Modul 6 Javascript</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-light py-5">
+        <div class="container">
+            <h1 class="text-center fw-bold mb-4">Katalog Produk</h1>
+            <div class="d-flex justify-content-center gap-2 mb-2">
+                <button class="btn btn-primary filter-btn" onclick="filterProduk('semua')">Semua</button>
+                <button class="btn btn-outline-primary filter-btn" onclick="filterProduk('elektronik')">Elektronik</button>
+                <button class="btn btn-outline-primary filter-btn" onclick="filterProduk('pakaian')">Pakaian</button>
+                <button class="btn btn-outline-primary filter-btn" onclick="filterProduk('buku')">Buku</button>
+            </div>
+            <div class="row g-4" id="product-container">
+                
+            </div>
+        </div>
+        <script>
+            const products = [
+                {
+                    id: 1,
+                    nama: "Laptop Gaming",
+                    harga: 1500000,
+                    kategori: "elektronik",
+                    deskripsi: "Laptop performa tinggi untuk gaming dan desain grafis.",
+                    gambar: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&q=80&w=400",
+                },
+                {
+                    id: 2,
+                    nama: "Kemeja Pria",
+                    harga: 150000,
+                    kategori: "pakaian",
+                    deskripsi: "Kemeja anti panas.",
+                    gambar: "https://images.unsplash.com/photo-1740711152088-88a009e877bb?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2VtZWphfGVufDB8fDB8fHww",
+                },
+                {
+                    id: 1,
+                    nama: "Buku Milk and Honey",
+                    harga: 90000,
+                    kategori: "buku",
+                    deskripsi: "Buku untuk mereka yang jatuh hati.",
+                    gambar: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGJ1a3V8ZW58MHx8MHx8fDA%3D",
+                }
+            ]
+
+            function formatRupiah (angka){
+                return new Intl.NumberFormat ('id-ID', {style: "currency", currency: "IDR"}).format(angka);
+            }
+
+            function tampilkanProduk (daftarProduk){
+                const container = document.getElementById('product-container');
+                container.innerHTML = '';
+                daftarProduk.forEach(produk => {
+                const cardHTML = `
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 shadow-sm border-0 product-card">
+                            <img src="${produk.gambar}" class="card-img-top w-100 object-fit-cover" style="height: 300px;" alt="${produk.nama}">
+                            <div class="card-body d-flex flex-column">
+                                <span class="badge bg-secondary mb-2 align-self-start">${produk.kategori}</span>
+                                <h5 class="card-title fw-bold">${produk.nama}</h5>
+                                <p class="card-text text-muted flex-grow-1">${produk.deskripsi}</p>
+                                <h6 class="text-primary fw-bold fs-5">${formatRupiah(produk.harga)}</h6>
+                                <button class="btn btn-success w-100 mt-2">Beli Sekarang</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+            }
+
+            function filterProduk (kategori) {
+                if (kategori === "semua") {
+                    tampilkanProduk (products);
+                } else {
+                    const produkTersaring = products.filter(item => item.kategori === kategori);
+                    tampilkanProduk (produkTersaring);
+                }
+            }
+            tampilkanProduk(products);
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
